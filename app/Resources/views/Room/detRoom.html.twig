@@ -1,0 +1,29 @@
+<!-- Modal -->
+<div class="modal fade" id="modalDetalle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                {#<a class="close" href="{{ path('catgegoria_index') }}"><span aria-hidden="true">&times;</span></a>#}
+                <h4 class="modal-title" id="FormDetalle">Detalle Room</h4>
+            </div>
+            {% if formDet is defined %}
+            {{ form_start(formDet,{'attr': {'novalidate': 'novalidate','id':'formDet', 'name':'formDetn'}}) }}
+            {% form_theme formDet 'bootstrap_3_layout.html.twig' %}
+                <div class="modal-body">
+
+                    {#{{ form_row(formDet.id) }}#}
+                    {{ form_row(formDet.desRoom) }}
+                    {{ form_row(formDet.capRoom) }}
+                    {{ form_row(formDet.tipRoom) }}
+                    {{ form_row(formDet.ObsRoom) }}
+
+                </div>
+                <div class="modal-footer">
+                    <button id="enviar" type="submit" class="btn btn-info">Guardar cambios</button>
+                </div>
+                {{ form_end(formDet) }}
+            {% endif %}
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="mensaje">
+        {% for flash_message in app.session.flashBag.get('success') %}
+            <div class="flash-success alert alert-success"  role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ flash_message | upper }}
+            </div>
+        {% endfor %}
+        {% for flash_message in app.session.flashBag.get('error') %}
+            <div class="flash-error alert alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ flash_message | upper }}
+            </div>
+        {% endfor %}
+        {% for flash_message in app.session.flashBag.get('info') %}
+            <div class="flash-info alert alert-info" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ flash_message | upper }}
+            </div>
+        {% endfor %}
+
+    </div>
+    <h1>Room Services</h1>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        Nueva Room
+    </button>
+    <div id="tablediv">
+    {% include 'Room/listRoom.html.twig' %}
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                    <div class="modal-header">
+                        {#<a class="close" href="{{ path('catgegoria_index') }}"><span aria-hidden="true">&times;</span></a>#}
+                        <h4 class="modal-title" id="FormNuevo">Nuevo Room</h4>
+                    </div>
+                    {% if form is defined %}
+                        {{ form_start(form,{'attr': {'novalidate': 'novalidate'}}) }}
+                        {% form_theme form 'bootstrap_3_layout.html.twig' %}
+                        <div class="modal-body">
+                            {#{{ form_row(form.id) }}#}
+                            {{ form_row(form.desRoom) }}
+                            {{ form_row(form.capRoom) }}
+                            {{ form_row(form.tipRoom) }}
+                            {{ form_row(form.ObsRoom) }}
+
+                        </div>
+                        <div class="modal-footer">
+                            {{ form_row(form.Guardar,{ 'attr': {'class': 'btn btn-primary'} }) }}
+                        </div>
+                        {{ form_end(form) }}
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div id="modalDet">
+
+    </div>
+{%  endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset('js/src/room_src.js') }}"></script>
+{% endblock %}

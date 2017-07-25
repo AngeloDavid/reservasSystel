@@ -1,0 +1,35 @@
+<table class="table">
+    <thead class="thead-inverse">
+    <tr>
+        <th>#</th>
+        <th>Descripcion</th>
+        <th>Capacidad</th>
+        <th>Tipo</th>
+        <th>Observacion</th>
+        <th>Accion</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for room in Rooms %}
+        <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ room.desRoom }}</td>
+            <td>{{ room.capRoom }}</td>
+            <td>{{ room.tipRoom }}</td>
+            <td>{{ room.ObsRoom }}</td>
+            <td>{% if room.estRoom == 1 %}
+                    <button id="btnmostrar" type="button" class="btn btn-outline-info" value="{{ room.id }}">Modificar</button>
+
+                {% endif %}
+            </td>
+            <td>
+                {% if room.estRoom == 1 %}
+                    <button type="button"  id="btndelete" class="btn btn-outline-danger" value="{{ room.id }}" >Deshabilitar</button>
+                {% else %}
+                    <button type="button"  id="btndelete" class="btn btn-outline-success"  value="{{ room.id }}" >&nbsp&nbsp&nbspHabilitar&nbsp&nbsp&nbsp</button>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

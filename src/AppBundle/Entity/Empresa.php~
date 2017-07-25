@@ -1,0 +1,75 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Empresa
+ *
+ * @ORM\Table(name="empresa")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\EmpresaRepository")
+ */
+class Empresa
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dec_emp", type="string", length=255)
+     */
+    private $decEmp;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Usuario", mappedBy="userEmpFk")
+     */
+    private $usuarios;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Room", mappedBy="roomEmpFk")
+     */
+    private  $rooms;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set decEmp
+     *
+     * @param string $decEmp
+     *
+     * @return Empresa
+     */
+    public function setDecEmp($decEmp)
+    {
+        $this->decEmp = $decEmp;
+
+        return $this;
+    }
+
+    /**
+     * Get decEmp
+     *
+     * @return string
+     */
+    public function getDecEmp()
+    {
+        return $this->decEmp;
+    }
+}
+
