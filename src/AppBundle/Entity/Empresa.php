@@ -29,6 +29,13 @@ class Empresa
     private $decEmp;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="est_emp", type="integer")
+     */
+    private $estEmp;
+
+    /**
      * @ORM\OneToMany(targetEntity="Usuario", mappedBy="userEmpFk")
      */
     private $usuarios;
@@ -146,5 +153,29 @@ class Empresa
     public function getRooms()
     {
         return $this->rooms;
+    }
+
+    /**
+     * Set estEmp
+     *
+     * @param integer $estEmp
+     *
+     * @return Empresa
+     */
+    public function setEstEmp($estEmp)
+    {
+        $this->estEmp = $estEmp;
+
+        return $this;
+    }
+
+    /**
+     * Get estEmp
+     *
+     * @return integer
+     */
+    public function getEstEmp()
+    {
+        return $this->estEmp;
     }
 }

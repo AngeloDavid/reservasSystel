@@ -7,7 +7,7 @@
                 <h4 class="modal-title" id="FormDetalle">Detalle Room</h4>
             </div>
             {% if formDet is defined %}
-            {{ form_start(formDet,{'attr': {'novalidate': 'novalidate','id':'formDet', 'name':'formDetn'}}) }}
+            {{ form_start(formDet,{'attr': {'novalidate': 'novalidate','id':'formDet' },'name':'formDet'}) }}
             {% form_theme formDet 'bootstrap_3_layout.html.twig' %}
                 <div class="modal-body">
 

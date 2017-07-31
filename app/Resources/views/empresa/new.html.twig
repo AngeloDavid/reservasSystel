@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Nueva Empresa</h1>
+
+    {{ form_start(form) }}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+        {{ form_widget(form) }}
+    <div class="row">
+        <div class="col"><a class="btn btn-outline-secondary" href="{{ path('empresa_index') }}"><i class="fa fa-arrow-left" aria-hidden="true"></i>Lista de Empresas</a></div>
+        <div class="col text-right"><input type="submit" value="Crear" class="btn btn-outline-primary" /></div>
+
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}

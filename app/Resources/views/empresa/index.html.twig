@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Empresas</h1>
+
+    <a  class="btn btn-primary"  href="{{ path('empresa_new') }}"> <i class="fa fa-plus-circle" aria-hidden="true"></i>Nueva empresa</a>
+
+    <table class="table">
+        <thead class="thead-inverse">
+            <tr>
+                <th>Id</th>
+                <th>Decemp</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for empresa in empresas %}
+            <tr>
+                <td><a href="{{ path('empresa_show', { 'id': empresa.id }) }}">{{ empresa.id }}</a></td>
+                <td>{{ empresa.decEmp }}</td>
+                <td>
+                    <div  class="list-group">
+                        {% if empresa.estEmp == 1 %}
+                        <a class=" list-group-item btn btn-outline-warning" href="{{ path('empresa_edit', { 'id': empresa.id }) }}">Editar</a>
+                        {% endif %}
+                        {% if empresa.estEmp == 1 %}
+                        <a class="list-group-item  btn btn-outline-danger" href="{{ path('empresa_delete', { 'id': empresa.id }) }}">Deshabilitar</a>
+                        {% else %}
+                        <a class="list-group-item  btn btn-outline-success" href="{{ path('empresa_delete', { 'id': empresa.id }) }}">Habilitar</a>
+                        {%  endif %}
+
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock %}

@@ -3,9 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Room;
+use function PHPSTORM_META\type;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -50,7 +52,7 @@ class RoomController extends Controller
             $em->persist($Room);
             $em->flush();
             $Rooms=$this->roomAll();
-            $ms="La categoria  ha sido ingresada con exito";
+            $ms="Room  ingreado con exito";
             $this->addFlash('success',"$ms");
             return $this->render("Room/index.html.twig",array("Rooms"=>$Rooms,"Room"=>$Room, "form"=>$form->createView()));
         }
@@ -59,7 +61,7 @@ class RoomController extends Controller
         return $this->render("Room/index.html.twig",array("Rooms"=>$Rooms,"Room"=>null, "form"=>$form->createView()));
     }
     /**
-     * @Route("/Room/editar", options={"expose"=true}, name="editRoom")
+     * @Route("/Room/get", options={"expose"=true}, name="getRoom")
      */
     public function editRoomAction(Request $request)
     {
@@ -78,6 +80,7 @@ class RoomController extends Controller
             return $this->redirectToRoute("catgegoria_index");
         }else {
             $form= $this->createFormBuilder($room)
+                ->add('id',HiddenType::class,array())
                 ->add('desRoom',TextType::class,array('label'=>'Descripcion:','required'=>true))
                 ->add('capRoom',IntegerType::class,array('label'=>'Capacidad:'))
                 ->add('tipRoom',ChoiceType::class,array('label'=>'Tipo de Room:','choices'  => array(
@@ -90,7 +93,9 @@ class RoomController extends Controller
                 ->add('ObsRoom',TextareaType::class,array('label'=>'Observaciones:'))
                 ->getForm();
             $form->handleRequest($request);
-
+            if($form->isValid()){
+                return new JsonResponse(array('status'=>'succeess'));
+            }
             // Obtener solo el HTML del render no las cabeceras
             $roomsform_html = $this->render('Room/detRoom.html.twig',array(
                 'formDet'=> $form->createView()
@@ -99,6 +104,47 @@ class RoomController extends Controller
             return new JsonResponse(array('roomsform_html' => $roomsform_html));
         }
 
+    }
+
+    /**
+     * @Route("/Room/editar", options={"expose"=true}, name="editRoom")
+     */
+    public function edit2RoomAction(Request $request)
+    {
+        if (!$request->isXMLHttpRequest()) {
+            $this->addFlash('error','Acion no permitida');
+            return $this->redirectToRoute('roompage');
+        }else{
+            $id = $request->get('id');
+            $em = $this->getDoctrine()->getManager();
+            $room = $em->find("AppBundle:Room", $id);
+            $ms="El cuarto <strong>".$room->getDesRoom()."</strong> ha sido Modficado ";
+
+            $room->setDesRoom($request->get('desp'));
+            $room->setCapRoom($request->get('cap'));
+            $room->setTipRoom($request->get('tip'));
+            $room->setObsRoom($request->get('obs'));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            // obtener la lista de comentarios actualizada
+            $roomslist= $this->roomAll();
+            // Obtener solo el HTML del render no las cabeceras
+            $roomslist_html = $this->render('Room/listRoom.html.twig',array(
+                'Rooms'=> $roomslist
+            ))->getContent();
+
+
+            return new JsonResponse(array(
+                    'tymes'=>'success',
+                    'mensaje' => $ms,
+                    'roomslist_html' => $roomslist_html
+                )
+            );
+
+
+        }
     }
 
     /**

@@ -37,7 +37,7 @@ $(document).ready(function () {
         e.preventDefault();
         $.ajax({
             method:"POST",
-            url:Routing.generate('editRoom'),
+            url:Routing.generate('getRoom'),
             data:{id: $(this).attr('value')},
             dataType:'json',
             success: function (data)
@@ -60,19 +60,25 @@ $(document).ready(function () {
             {
             }
         });
-    })
-    $(document).on('submit','#formDet',function (e) {
+    });
+    $(document).on('click','#enviar',function (e) {
         e.preventDefault();
-        console.log( $(this));
+        console.log($('#formDet').find('#form_desRoom').val());
         $.ajax({
             method:"POST",
             url:Routing.generate('editRoom'),
-            data:{id: $(this).attr('value'), form: $(this).serialize()},
+            data:{ id: $('#formDet').find('#form_id').attr('value'),
+                   desp: $('#formDet').find('#form_desRoom').val(),
+                   cap: $('#formDet').find('#form_capRoom').val(),
+                   tip: $('#formDet').find('#form_tipRoom').val(),
+                   obs: $('#formDet').find('#form_ObsRoom').val()},
+
             dataType:'json',
             success: function (data)
             {
-                console.log(data);
-                /*if(data.tymes == "success"){
+                console.log(data.mensaje)
+
+                if(data.tymes == "success"){
                  var ms= "<div class= 'flash-success alert alert-"+data.tymes+"'  role='alert'>";
                  ms+="<button type='button' class='close' data-dismiss= 'alert' aria-label='Close'>";
                  ms+="<span aria-hidden='true'>x</span></button>";
@@ -80,7 +86,8 @@ $(document).ready(function () {
                  ms+="</div>";
                  $('#mensaje').html(ms);
                  $('#tablediv').html(data.roomslist_html); // presento el mensaje
-                 }*/
+                 $('#modalDetalle').modal('hide');
+                 }
             },
             error: function (jqXHR,exception)
             {
