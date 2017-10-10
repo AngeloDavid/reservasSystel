@@ -90,6 +90,7 @@ class RoomController extends Controller
                     'Aula' => 'Aul',
                     'Otro' => 'Otr'
                 ),'required'=>true))
+
                 ->add('ObsRoom',TextareaType::class,array('label'=>'Observaciones:'))
                 ->getForm();
             $form->handleRequest($request);

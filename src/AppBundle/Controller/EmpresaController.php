@@ -66,7 +66,7 @@ class EmpresaController extends Controller
      * @Route("/{id}", name="empresa_show")
      * @Method("GET")
      */
-    public function showAction(Empresa $empresa)
+  /*  public function showAction(Empresa $empresa)
     {
         $deleteForm = $this->createDeleteForm($empresa);
 
@@ -74,7 +74,7 @@ class EmpresaController extends Controller
             'empresa' => $empresa,
             'delete_form' => $deleteForm->createView(),
         ));
-    }
+    }*/
 
     /**
      * Displays a form to edit an existing empresa entity.
@@ -84,7 +84,7 @@ class EmpresaController extends Controller
      */
     public function editAction(Request $request, Empresa $empresa)
     {
-        $deleteForm = $this->createDeleteForm($empresa);
+
         $editForm = $this->createForm('AppBundle\Form\EmpresaType', $empresa);
         $editForm->handleRequest($request);
 
@@ -98,8 +98,7 @@ class EmpresaController extends Controller
 
         return $this->render('empresa/edit.html.twig', array(
             'empresa' => $empresa,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form' => $editForm->createView()
         ));
     }
 
@@ -107,14 +106,14 @@ class EmpresaController extends Controller
      * Deletes a empresa entity.
      *
      * @Route("/{id}", name="empresa_delete")
-     * @Method("DELETE")
+     *
      */
     public function deleteAction(Request $request, $id)
     {
 
             $em = $this->getDoctrine()->getManager();
             $Empresa=$em->find('AppBundle:Empresa',$id);
-            $ms="El cuarto <strong>".$Empresa->getDesRoom()."</strong> ";
+            $ms="El cuarto <strong>".$Empresa->getDecEmp()."</strong> ";
             if($Empresa->getEstEmp()==1){
                 $Empresa->setEstEmp(0);
                 $ms.=" fue Deshabilitadao";

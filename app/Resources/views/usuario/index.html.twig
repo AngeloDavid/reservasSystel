@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Lista de Usuarios</h1>
+    <a class="btn btn-primary"   href="{{ path('usuario_new') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo usuario</a>
+    <table class="table">
+        <thead class="thead-inverse">
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Cedula</th>
+                <th>E-mail</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for usuario in usuarios %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ usuario.nomUser }}</td>
+                <td>{{ usuario.appUser }}</td>
+                <td>{{ usuario.cedUser }}</td>
+                <td>{{ usuario.emailUser }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('usuario_show', { 'id': usuario.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('usuario_edit', { 'id': usuario.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
